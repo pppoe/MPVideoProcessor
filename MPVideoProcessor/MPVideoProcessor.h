@@ -25,7 +25,7 @@
 
 //< Utility function, typically used in the delegate function
 + (CGImageRef)createGrayScaleImageRefFromImageBuffer:(CVImageBufferRef)imageBuffer;
-+ (CGImageRef)createRGBImageRefFromImageBuffer:(CVImageBufferRef)imageBuffer;
+//+ (CGImageRef)createRGBImageRefFromImageBuffer:(CVImageBufferRef)imageBuffer;
 
 
 @end

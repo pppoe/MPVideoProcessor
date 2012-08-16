@@ -70,18 +70,18 @@
     return imageRef;
 }
 
-+ (CGImageRef)createRGBImageRefFromImageBuffer:(CVImageBufferRef)imageBuffer {
-    size_t width = CVPixelBufferGetWidth(imageBuffer);
-    size_t height = CVPixelBufferGetHeight(imageBuffer);
-    size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);
-    uint8_t *lumaBuffer = (uint8_t *)CVPixelBufferGetBaseAddress(imageBuffer);
-    CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = CGBitmapContextCreate(lumaBuffer, width, height, 8, bytesPerRow, rgbColorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedLast);
-    CGImageRef imageRef = CGBitmapContextCreateImage(context);
-    CGContextRelease(context);
-    CGColorSpaceRelease(rgbColorSpace);
-    return imageRef;
-}
+//+ (CGImageRef)createRGBImageRefFromImageBuffer:(CVImageBufferRef)imageBuffer {
+//    size_t width = CVPixelBufferGetWidth(imageBuffer);
+//    size_t height = CVPixelBufferGetHeight(imageBuffer);
+//    size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);
+//    uint8_t *lumaBuffer = (uint8_t *)CVPixelBufferGetBaseAddress(imageBuffer);
+//    CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+//    CGContextRef context = CGBitmapContextCreate(lumaBuffer, width, height, 8, bytesPerRow, rgbColorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedLast);
+//    CGImageRef imageRef = CGBitmapContextCreateImage(context);
+//    CGContextRelease(context);
+//    CGColorSpaceRelease(rgbColorSpace);
+//    return imageRef;
+//}
 
 
 @end
