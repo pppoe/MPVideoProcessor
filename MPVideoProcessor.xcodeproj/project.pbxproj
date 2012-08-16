@@ -13,6 +13,13 @@
 		1AE28DC715DDAC0300D52281 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1AE28DC515DDAC0300D52281 /* InfoPlist.strings */; };
 		1AE28DC915DDAC0300D52281 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE28DC815DDAC0300D52281 /* main.m */; };
 		1AE28DCD15DDAC0300D52281 /* MPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE28DCC15DDAC0300D52281 /* MPAppDelegate.m */; };
+		1AE28DDE15DDAC4D00D52281 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AE28DDA15DDAC4D00D52281 /* Accelerate.framework */; };
+		1AE28DDF15DDAC4D00D52281 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AE28DDB15DDAC4D00D52281 /* AVFoundation.framework */; };
+		1AE28DE015DDAC4D00D52281 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AE28DDC15DDAC4D00D52281 /* CoreMedia.framework */; };
+		1AE28DE115DDAC4D00D52281 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AE28DDD15DDAC4D00D52281 /* CoreVideo.framework */; };
+		1AE28DE515DDAD1100D52281 /* MPMainViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AE28DE315DDAD1100D52281 /* MPMainViewController.mm */; };
+		1AE28DE615DDAD1100D52281 /* MPMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AE28DE415DDAD1100D52281 /* MPMainViewController.xib */; };
+		1AE28DE715DDAD7F00D52281 /* MPVideoProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE28DD915DDAC3500D52281 /* MPVideoProcessor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +33,15 @@
 		1AE28DCA15DDAC0300D52281 /* MPVideoProcessor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MPVideoProcessor-Prefix.pch"; sourceTree = "<group>"; };
 		1AE28DCB15DDAC0300D52281 /* MPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MPAppDelegate.h; sourceTree = "<group>"; };
 		1AE28DCC15DDAC0300D52281 /* MPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MPAppDelegate.m; sourceTree = "<group>"; };
+		1AE28DD815DDAC3500D52281 /* MPVideoProcessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MPVideoProcessor.h; sourceTree = "<group>"; };
+		1AE28DD915DDAC3500D52281 /* MPVideoProcessor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MPVideoProcessor.m; sourceTree = "<group>"; };
+		1AE28DDA15DDAC4D00D52281 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		1AE28DDB15DDAC4D00D52281 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		1AE28DDC15DDAC4D00D52281 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		1AE28DDD15DDAC4D00D52281 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		1AE28DE215DDAD1100D52281 /* MPMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMainViewController.h; sourceTree = "<group>"; };
+		1AE28DE315DDAD1100D52281 /* MPMainViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MPMainViewController.mm; sourceTree = "<group>"; };
+		1AE28DE415DDAD1100D52281 /* MPMainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MPMainViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +49,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AE28DDE15DDAC4D00D52281 /* Accelerate.framework in Frameworks */,
+				1AE28DDF15DDAC4D00D52281 /* AVFoundation.framework in Frameworks */,
+				1AE28DE015DDAC4D00D52281 /* CoreMedia.framework in Frameworks */,
+				1AE28DE115DDAC4D00D52281 /* CoreVideo.framework in Frameworks */,
 				1AE28DBD15DDAC0300D52281 /* UIKit.framework in Frameworks */,
 				1AE28DBF15DDAC0300D52281 /* Foundation.framework in Frameworks */,
 				1AE28DC115DDAC0300D52281 /* CoreGraphics.framework in Frameworks */,
@@ -62,6 +82,10 @@
 		1AE28DBB15DDAC0300D52281 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1AE28DDA15DDAC4D00D52281 /* Accelerate.framework */,
+				1AE28DDB15DDAC4D00D52281 /* AVFoundation.framework */,
+				1AE28DDC15DDAC4D00D52281 /* CoreMedia.framework */,
+				1AE28DDD15DDAC4D00D52281 /* CoreVideo.framework */,
 				1AE28DBC15DDAC0300D52281 /* UIKit.framework */,
 				1AE28DBE15DDAC0300D52281 /* Foundation.framework */,
 				1AE28DC015DDAC0300D52281 /* CoreGraphics.framework */,
@@ -72,8 +96,12 @@
 		1AE28DC215DDAC0300D52281 /* MPVideoProcessor */ = {
 			isa = PBXGroup;
 			children = (
+				1AE28DD715DDAC1900D52281 /* MPVideoProcessor */,
 				1AE28DCB15DDAC0300D52281 /* MPAppDelegate.h */,
 				1AE28DCC15DDAC0300D52281 /* MPAppDelegate.m */,
+				1AE28DE215DDAD1100D52281 /* MPMainViewController.h */,
+				1AE28DE315DDAD1100D52281 /* MPMainViewController.mm */,
+				1AE28DE415DDAD1100D52281 /* MPMainViewController.xib */,
 				1AE28DC315DDAC0300D52281 /* Supporting Files */,
 			);
 			path = MPVideoProcessor;
@@ -88,6 +116,15 @@
 				1AE28DCA15DDAC0300D52281 /* MPVideoProcessor-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1AE28DD715DDAC1900D52281 /* MPVideoProcessor */ = {
+			isa = PBXGroup;
+			children = (
+				1AE28DD815DDAC3500D52281 /* MPVideoProcessor.h */,
+				1AE28DD915DDAC3500D52281 /* MPVideoProcessor.m */,
+			);
+			name = MPVideoProcessor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,6 +180,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1AE28DC715DDAC0300D52281 /* InfoPlist.strings in Resources */,
+				1AE28DE615DDAD1100D52281 /* MPMainViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,6 +193,8 @@
 			files = (
 				1AE28DC915DDAC0300D52281 /* main.m in Sources */,
 				1AE28DCD15DDAC0300D52281 /* MPAppDelegate.m in Sources */,
+				1AE28DE515DDAD1100D52281 /* MPMainViewController.mm in Sources */,
+				1AE28DE715DDAD7F00D52281 /* MPVideoProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
