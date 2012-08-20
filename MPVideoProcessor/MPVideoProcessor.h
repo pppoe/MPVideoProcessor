@@ -11,9 +11,18 @@
 @class AVCaptureSession;
 @protocol AVCaptureVideoDataOutputSampleBufferDelegate;
 
+typedef enum {
+    EnumCaptureColorImageRGB,
+    EnumCaptureGrayScaleImage
+} CaptureImageType;
+
 @interface MPVideoProcessor : NSObject
 
 @property (strong, nonatomic) AVCaptureSession *m_avSession;
+
+//< By Default: EnumCaptureGrayScaleImage
+@property (assign, nonatomic) CaptureImageType m_captureImageType;
+
 
 //< Start Steps, call setupAVCaptureSession first than startAVSessionWithBufferDelegate
 //< One can add customization between these two methods
@@ -24,8 +33,6 @@
 - (void)stopAVSession;
 
 //< Utility function, typically used in the delegate function
-+ (CGImageRef)createGrayScaleImageRefFromImageBuffer:(CVImageBufferRef)imageBuffer;
-//+ (CGImageRef)createRGBImageRefFromImageBuffer:(CVImageBufferRef)imageBuffer;
-
+- (CGImageRef)createImageRefFromImageBuffer:(CVImageBufferRef)imageBuffer;
 
 @end

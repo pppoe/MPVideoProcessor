@@ -26,7 +26,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.m_videoProcessor = [[MPVideoProcessor alloc] init];        
+        self.m_videoProcessor = [[MPVideoProcessor alloc] init];
+        self.m_videoProcessor.m_captureImageType = EnumCaptureColorImageRGB;
+//        self.m_videoProcessor.m_captureImageType = EnumCaptureGrayScaleImage;
     }
     return self;
 }
@@ -58,7 +60,7 @@
     CVImageBufferRef imageBuffer =  CMSampleBufferGetImageBuffer(sampleBuffer);
     CVPixelBufferLockBaseAddress(imageBuffer, 0);
 
-    CGImageRef dstImage = [MPVideoProcessor createGrayScaleImageRefFromImageBuffer:imageBuffer];
+    CGImageRef dstImage = [self.m_videoProcessor createImageRefFromImageBuffer:imageBuffer];
     
     CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
     

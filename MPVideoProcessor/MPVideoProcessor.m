@@ -10,8 +10,24 @@
 #import <AVFoundation/AVFoundation.h>
 #import <Accelerate/Accelerate.h>
 
+@interface MPVideoProcessor ()
+
++ (CGImageRef)createGrayScaleImageRefFromImageBuffer:(CVImageBufferRef)imageBuffer;
++ (CGImageRef)createRGBImageRefFromImageBuffer:(CVImageBufferRef)imageBuffer;
+
+@end
+
 @implementation MPVideoProcessor
 @synthesize m_avSession;
+@synthesize m_captureImageType;
+
+- (id)init {
+    if (self = [super init])
+    {
+        self.m_captureImageType = EnumCaptureGrayScaleImage;
+    }
+    return self;
+}
 
 - (void)setupAVCaptureSession {
 
@@ -30,10 +46,23 @@
         
         //< Output Buffer
         AVCaptureVideoDataOutput *dataOutput = [[AVCaptureVideoDataOutput alloc] init];
-        dataOutput.videoSettings = [NSDictionary
-                                    dictionaryWithObject:[NSNumber numberWithUnsignedInt:
-                                                          kCVPixelFormatType_420YpCbCr8BiPlanarFullRange]
-                                    forKey:(NSString *)kCVPixelBufferPixelFormatTypeKey];
+        switch (self.m_captureImageType)
+        {
+            case EnumCaptureGrayScaleImage:
+                dataOutput.videoSettings = [NSDictionary
+                                            dictionaryWithObject:[NSNumber numberWithUnsignedInt:
+                                                                  kCVPixelFormatType_420YpCbCr8BiPlanarFullRange]
+                                            forKey:(NSString *)kCVPixelBufferPixelFormatTypeKey];
+                break;
+            case EnumCaptureColorImageRGB:
+                dataOutput.videoSettings = [NSDictionary
+                                            dictionaryWithObject:[NSNumber numberWithUnsignedInt:
+                                                                  kCVPixelFormatType_32BGRA]
+                                            forKey:(NSString *)kCVPixelBufferPixelFormatTypeKey];
+                break;
+            default:
+                break;
+        }
         if ([avSession canAddOutput:dataOutput])
         {
             [avSession addOutput:dataOutput];
@@ -57,6 +86,21 @@
     [self.m_avSession stopRunning];
 }
 
+#pragma mark - Private
+- (CGImageRef)createImageRefFromImageBuffer:(CVImageBufferRef)imageBuffer {
+    switch (self.m_captureImageType)
+    {
+        case EnumCaptureGrayScaleImage:
+            return [MPVideoProcessor createGrayScaleImageRefFromImageBuffer:imageBuffer];
+            break;
+        case EnumCaptureColorImageRGB:
+            return [MPVideoProcessor createRGBImageRefFromImageBuffer:imageBuffer];
+            break;
+        default:
+            break;
+    }    
+}
+
 + (CGImageRef)createGrayScaleImageRefFromImageBuffer:(CVImageBufferRef)imageBuffer {
     size_t width = CVPixelBufferGetWidthOfPlane(imageBuffer, 0);
     size_t height = CVPixelBufferGetHeightOfPlane(imageBuffer, 0);
@@ -70,18 +114,18 @@
     return imageRef;
 }
 
-//+ (CGImageRef)createRGBImageRefFromImageBuffer:(CVImageBufferRef)imageBuffer {
-//    size_t width = CVPixelBufferGetWidth(imageBuffer);
-//    size_t height = CVPixelBufferGetHeight(imageBuffer);
-//    size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);
-//    uint8_t *lumaBuffer = (uint8_t *)CVPixelBufferGetBaseAddress(imageBuffer);
-//    CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
-//    CGContextRef context = CGBitmapContextCreate(lumaBuffer, width, height, 8, bytesPerRow, rgbColorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedLast);
-//    CGImageRef imageRef = CGBitmapContextCreateImage(context);
-//    CGContextRelease(context);
-//    CGColorSpaceRelease(rgbColorSpace);
-//    return imageRef;
-//}
++ (CGImageRef)createRGBImageRefFromImageBuffer:(CVImageBufferRef)imageBuffer {
+    size_t width = CVPixelBufferGetWidth(imageBuffer);
+    size_t height = CVPixelBufferGetHeight(imageBuffer);
+    size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);
+    uint8_t *lumaBuffer = (uint8_t *)CVPixelBufferGetBaseAddress(imageBuffer);
+    CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = CGBitmapContextCreate(lumaBuffer, width, height, 8, bytesPerRow, rgbColorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
+    CGImageRef imageRef = CGBitmapContextCreateImage(context);
+    CGContextRelease(context);
+    CGColorSpaceRelease(rgbColorSpace);
+    return imageRef;
+}
 
 
 @end
