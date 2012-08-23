@@ -9,6 +9,7 @@
 #import "MPMainViewController.h"
 #import "MPVideoProcessor.h"
 #import <AVFoundation/AVFoundation.h>
+#import <Accelerate/Accelerate.h>
 
 #define kControlButtonStatusWaitForStart 0x100
 #define kControlButtonStatusWaitForStop 0x101
@@ -16,10 +17,14 @@
 #define kControlButtonCaptionStop @"Stop"
 
 @interface MPMainViewController () <AVCaptureVideoDataOutputSampleBufferDelegate>
+
+//< As a demo, process each frame here
+- (CGImageRef)postProcessing:(CVImageBufferRef)imageRef;
+
 @end
 
 @implementation MPMainViewController
-@synthesize m_imageView, m_controlButton;
+@synthesize m_imageView, m_controlButton, m_switchProcessingOnOff;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -54,13 +59,33 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (CGImageRef)postProcessing:(CVImageBufferRef)imageBuffer
+{
+    //< Demo: Map the Image to a Circle Image, for Color Image Only
+    size_t width = CVPixelBufferGetWidth(imageBuffer);
+    size_t height = CVPixelBufferGetHeight(imageBuffer);
+    size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);
+    uint8_t *lumaBuffer = (uint8_t *)CVPixelBufferGetBaseAddress(imageBuffer);
+    CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = CGBitmapContextCreate(lumaBuffer, width, height, 8, bytesPerRow, rgbColorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
+    CGImageRef imageRef = CGBitmapContextCreateImage(context);
+    CGContextRelease(context);
+    CGColorSpaceRelease(rgbColorSpace);
+    return imageRef;
+}
+
 #pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
     
     CVImageBufferRef imageBuffer =  CMSampleBufferGetImageBuffer(sampleBuffer);
     CVPixelBufferLockBaseAddress(imageBuffer, 0);
 
-    CGImageRef dstImage = [self.m_videoProcessor createImageRefFromImageBuffer:imageBuffer];
+    
+        
+    CGImageRef dstImage = (m_switchProcessingOnOff.on ?
+                           [self postProcessing:imageBuffer]
+                           :
+                           [self.m_videoProcessor createImageRefFromImageBuffer:imageBuffer]);
     
     CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
     

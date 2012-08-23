@@ -12,6 +12,7 @@
 
 @interface MPMainViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UISwitch *m_switchProcessingOnOff;
 @property (strong, nonatomic) IBOutlet UIButton *m_controlButton;
 @property (strong, nonatomic) IBOutlet UIImageView *m_imageView;
 
