@@ -12,8 +12,8 @@
 @protocol AVCaptureVideoDataOutputSampleBufferDelegate;
 
 typedef enum {
-    EnumCaptureColorImageRGB,
-    EnumCaptureGrayScaleImage
+    MPVideoProcessorCaptureColorImageRGB,
+    MPVideoProcessorCaptureColorImageGrayScale
 } CaptureImageType;
 
 @interface MPVideoProcessor : NSObject

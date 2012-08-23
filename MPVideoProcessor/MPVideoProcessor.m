@@ -24,7 +24,7 @@
 - (id)init {
     if (self = [super init])
     {
-        self.m_captureImageType = EnumCaptureGrayScaleImage;
+        self.m_captureImageType = MPVideoProcessorCaptureColorImageGrayScale;
     }
     return self;
 }
@@ -37,6 +37,15 @@
     [avSession setSessionPreset:AVCaptureSessionPresetLow];
     
     AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    
+    [captureDevice lockForConfiguration:&error];
+    
+    [captureDevice setExposureMode:AVCaptureExposureModeLocked];
+    [captureDevice setFocusMode:AVCaptureFocusModeLocked];
+    [captureDevice setWhiteBalanceMode:AVCaptureWhiteBalanceModeLocked];
+    
+    [captureDevice unlockForConfiguration];
+
     AVCaptureDeviceInput *deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice
                                                                               error:&error];
     if ([avSession canAddInput:deviceInput])
@@ -48,13 +57,13 @@
         AVCaptureVideoDataOutput *dataOutput = [[AVCaptureVideoDataOutput alloc] init];
         switch (self.m_captureImageType)
         {
-            case EnumCaptureGrayScaleImage:
+            case MPVideoProcessorCaptureColorImageGrayScale:
                 dataOutput.videoSettings = [NSDictionary
                                             dictionaryWithObject:[NSNumber numberWithUnsignedInt:
                                                                   kCVPixelFormatType_420YpCbCr8BiPlanarFullRange]
                                             forKey:(NSString *)kCVPixelBufferPixelFormatTypeKey];
                 break;
-            case EnumCaptureColorImageRGB:
+            case MPVideoProcessorCaptureColorImageRGB:
                 dataOutput.videoSettings = [NSDictionary
                                             dictionaryWithObject:[NSNumber numberWithUnsignedInt:
                                                                   kCVPixelFormatType_32BGRA]
@@ -74,6 +83,12 @@
 }
 
 - (void)startAVSessionWithBufferDelegate:(id<AVCaptureVideoDataOutputSampleBufferDelegate>) delegate {
+
+    if (!self.m_avSession)
+    {
+        [self setupAVCaptureSession];
+    }
+    
     AVCaptureVideoDataOutput *dataOutput = [[self.m_avSession outputs] objectAtIndex:0];
     if ([dataOutput sampleBufferDelegate] == nil || [dataOutput sampleBufferDelegate] != delegate)
     {
@@ -90,10 +105,10 @@
 - (CGImageRef)createImageRefFromImageBuffer:(CVImageBufferRef)imageBuffer {
     switch (self.m_captureImageType)
     {
-        case EnumCaptureGrayScaleImage:
+        case MPVideoProcessorCaptureColorImageGrayScale:
             return [MPVideoProcessor createGrayScaleImageRefFromImageBuffer:imageBuffer];
             break;
-        case EnumCaptureColorImageRGB:
+        case MPVideoProcessorCaptureColorImageRGB:
             return [MPVideoProcessor createRGBImageRefFromImageBuffer:imageBuffer];
             break;
         default:
