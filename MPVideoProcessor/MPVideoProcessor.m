@@ -74,6 +74,10 @@
 }
 
 - (void)startAVSessionWithBufferDelegate:(id<AVCaptureVideoDataOutputSampleBufferDelegate>) delegate {
+    if (!self.m_avSession)
+    {
+        [self setupAVCaptureSession];
+    }
     AVCaptureVideoDataOutput *dataOutput = [[self.m_avSession outputs] objectAtIndex:0];
     if ([dataOutput sampleBufferDelegate] == nil || [dataOutput sampleBufferDelegate] != delegate)
     {
