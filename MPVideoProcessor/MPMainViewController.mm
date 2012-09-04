@@ -32,8 +32,8 @@
     if (self) {
         // Custom initialization
         self.m_videoProcessor = [[MPVideoProcessor alloc] init];
-        self.m_videoProcessor.m_captureImageType = EnumCaptureColorImageRGB;
-//        self.m_videoProcessor.m_captureImageType = EnumCaptureGrayScaleImage;
+        self.m_videoProcessor.m_captureImageType = MPVideoProcessorCaptureColorImageRGB;
+//        self.m_videoProcessor.m_captureImageType = MPVideoProcessorCaptureColorImageGrayScale;
     }
     return self;
 }
